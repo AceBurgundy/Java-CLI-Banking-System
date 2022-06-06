@@ -132,4 +132,57 @@ public class Tools {
         }
     }
 
+    public static void deposit() throws IOException {
+
+        Helpers.clear();
+        showMenu();
+
+        System.out.println("\n\tAccount number: ");
+        int search = Helpers.inputInt(9999, 999);
+
+        System.out.println("\n\tPassword: ");
+        String password = Helpers.hidePassword();
+
+        System.out.println("\n\tDeposit Amount: ");
+        float deposit = Helpers.inputFloat(2000000000);
+
+        try {
+            String uri = "jdbc:sqlite:user.db";
+            connect = DriverManager.getConnection(uri);
+
+            inSql = connect.prepareStatement("SELECT * FROM accounts WHERE account_number = ? AND password = ?;");
+            inSql.setInt(1, search);
+            inSql.setString(2, Helpers.encrypt(password));
+
+            ResultSet sqlOutput = inSql.executeQuery();
+            float balance = sqlOutput.getInt("balance");
+
+            float newBalance = deposit += balance;
+
+            PreparedStatement inSql = connect.prepareStatement(
+                    "UPDATE accounts SET balance = ? WHERE account_number = ? AND password = ?");
+            inSql.setFloat(1, newBalance);
+            inSql.setInt(2, search);
+            inSql.setString(3, Helpers.encrypt(password));
+            inSql.executeUpdate();
+
+            System.out
+                    .println("\n\tHi " + sqlOutput.getString("first_name") + " " + sqlOutput.getString("last_name")
+                            + " your new balance is P" + newBalance + "\n");
+
+            Helpers.prompt();
+
+        } catch (SQLException e) {
+            System.out.println("\n\tSql Error your account may not have been registered yet\n");
+        } finally {
+            try {
+                if (connect != null) {
+                    connect.close();
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+
+        }
+    }
 }
