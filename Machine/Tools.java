@@ -93,4 +93,43 @@ public class Tools {
         }
     }
 
+    public static void inquireBalance() throws IOException {
+
+        Helpers.clear();
+        showMenu();
+
+        System.out.println("\n\tAccount number: ");
+        int search = Helpers.inputInt(9999, 999);
+
+        System.out.println("\n\tPassword: ");
+        String password = Helpers.hidePassword();
+
+        try {
+            String uri = "jdbc:sqlite:user.db";
+            connect = DriverManager.getConnection(uri);
+
+            inSql = connect.prepareStatement("SELECT * FROM accounts WHERE account_number = ? AND password = ?");
+            inSql.setInt(1, search);
+            inSql.setString(2, Helpers.encrypt(password));
+
+            ResultSet sqlOutput = inSql.executeQuery();
+            float balance = sqlOutput.getInt("balance");
+
+            System.out
+                    .println("\n\tYour still have P" + balance + "\n");
+            Helpers.prompt();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("\tSql Error your account may not have been registered yet\n");
+        } finally {
+            try {
+                if (connect != null) {
+                    connect.close();
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
 }
