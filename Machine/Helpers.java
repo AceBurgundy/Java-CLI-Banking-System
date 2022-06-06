@@ -79,4 +79,72 @@ public class Helpers {
       }
       return accumulator;
    }
+
+   public static String inputString() {
+      String value;
+
+      do {
+         System.out.print("        ");
+
+         try {
+            value = input.next();
+         } catch (InputMismatchException e) {
+            System.out.println("\tPlease enter a valid string.");
+            value = input.nextLine();
+            continue;
+         }
+         return value;
+
+      } while (true);
+   }
+
+   public static int inputInt(int upperLimit, int lowerLimit) {
+      int value;
+
+      do {
+         System.out.print("        ");
+
+         try {
+            value = input.nextInt();
+         } catch (InputMismatchException e) {
+            System.out.println("\tPlease enter a valid number.");
+            value = input.nextInt();
+            continue;
+         }
+
+         while (value > upperLimit || value < lowerLimit) {
+            Helpers.clear();
+            Tools.showMenu();
+            System.out.println("\n\tShould be > " + lowerLimit + " and < " + upperLimit);
+            System.out.print("        ");
+            value = input.nextInt();
+         }
+         return value;
+
+      } while (true);
+   }
+
+   public static float inputFloat(int limit) {
+      float value;
+
+      do {
+         System.out.print("        ");
+
+         try {
+            value = input.nextFloat();
+         } catch (InputMismatchException e) {
+            System.out.println("\tPlease enter a valid number.");
+            value = input.nextFloat();
+            continue;
+         }
+
+         while (value > limit || value < 0) {
+            value = input.nextFloat();
+            System.out.println("\tEnter the exact number of input.");
+         }
+         return value;
+
+      } while (true);
+   }
+
 }
