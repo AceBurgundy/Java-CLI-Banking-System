@@ -161,4 +161,20 @@ public class Helpers {
       return str;
    }
 
+   public static void prompt() {
+
+      System.out.println("\tDo another transaction? press y or n");
+      char choice = input.next().charAt(0);
+
+      while (choice != 'y' || choice != 'n') {
+
+         if (choice == 'y') {
+            break;
+         }
+         if (choice == 'n') {
+            System.out.println("\tThanks for using our machine goodbye.");
+            System.exit(0);
+         }
+      }
+   }
 }
