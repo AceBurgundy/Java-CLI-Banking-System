@@ -155,4 +155,10 @@ public class Helpers {
       }
    }
 
+   public static String hidePassword() {
+      char[] password = console.readPassword("        Hidden: ");
+      String str = new String(password);
+      return str;
+   }
+
 }
