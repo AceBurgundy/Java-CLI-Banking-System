@@ -147,4 +147,12 @@ public class Helpers {
       } while (true);
    }
 
+   public static void clear() {
+      try {
+         new ProcessBuilder("cmd", "/c", "cls", "clear").inheritIO().start().waitFor();
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+   }
+
 }
