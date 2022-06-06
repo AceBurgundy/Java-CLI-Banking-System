@@ -242,4 +242,10 @@ public class Tools {
             }
         }
     }
+
+    public static void program(boolean stop) {
+        stop = true;
+        System.out.println("Thank you for using our machine goodbye.");
+        System.exit(0);
+    }
 }
