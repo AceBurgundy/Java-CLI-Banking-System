@@ -172,7 +172,7 @@ public class Helpers {
             break;
          }
          if (choice == 'n') {
-            System.out.println("\tThanks for using our machine goodbye.");
+            System.out.println("\tThank you and have a good day.\n");
             System.exit(0);
          }
       }

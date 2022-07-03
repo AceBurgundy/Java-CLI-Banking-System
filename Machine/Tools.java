@@ -39,13 +39,13 @@ public class Tools {
         System.out.println("\t*******************************");
         System.out.println("\tFirst Name: ");
         String dbfirstName = Helpers.inputString();
-        System.out.println("\t*******************************");
+        System.out.println("\n\t*******************************");
         System.out.println("\tLast Name: ");
         String dblastName = Helpers.inputString();
-        System.out.println("\t*******************************");
+        System.out.println("\n\t*******************************");
         System.out.println("\tPassword: ");
         String dbpassword = Helpers.inputString();
-        System.out.println("\t*******************************");
+        System.out.println("\n\t*******************************");
         System.out.println("\tInitial Deposit: ");
         int dbBalance = Helpers.inputInt(2000000000, 0);
 
@@ -245,7 +245,7 @@ public class Tools {
 
     public static void program(boolean stop) {
         stop = true;
-        System.out.println("Thank you for using our machine goodbye.");
+        System.out.println("\tThank you and have a good day.\n");
         System.exit(0);
     }
 }
