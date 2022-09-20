@@ -1,13 +1,13 @@
 package Machine;
 
 import java.util.Scanner;
-import java.io.Console;
 import java.util.InputMismatchException;
 import java.util.Random;
+import javax.swing.*;
 
 public class Helpers {
-   private final static Console console = System.console();
    static Scanner input = new Scanner(System.in);
+   static JFrame dialog = new JFrame();
 
    public static String encrypt(String message) {
       String encryptedMessage = "";
@@ -80,66 +80,62 @@ public class Helpers {
       return accumulator;
    }
 
-   public static String inputString() {
-      String value;
-
-      do {
-         System.out.print("        ");
-
-         try {
-            value = input.next();
-         } catch (InputMismatchException e) {
-            System.out.println("\tPlease enter a valid string.");
-            value = input.nextLine();
-            continue;
-         }
-         return value;
-
-      } while (true);
-   }
-
    public static int inputInt(int upperLimit, int lowerLimit) {
       int value;
 
       do {
-         System.out.print("        ");
-
          try {
-            value = input.nextInt();
+            value = Integer.parseInt((JOptionPane.showInputDialog(dialog, "\n\tOption: ")));
          } catch (InputMismatchException e) {
             System.out.println("\tPlease enter a valid number.");
-            value = input.nextInt();
+            value = Integer.parseInt((JOptionPane.showInputDialog(dialog, "\n\tOption: ")));
             continue;
          }
 
          while (value > upperLimit || value < lowerLimit) {
             Helpers.clear();
             Tools.showMenu();
-            System.out.println("\n\tShould be > " + lowerLimit + " and < " + upperLimit);
+            System.out.println("\n\tShould be >= " + lowerLimit + " and <= " + upperLimit);
             System.out.print("        ");
-            value = input.nextInt();
+            value = Integer.parseInt((JOptionPane.showInputDialog(dialog, "\n\tOption: ")));
          }
          return value;
 
       } while (true);
    }
 
-   public static float inputFloat(int limit) {
+   public static boolean getBoolean(String message) {
+      boolean option = false;
+
+      if (message.equals("")) {
+         message = "Yes or No?";
+      } else {
+         int choice = JOptionPane.showConfirmDialog(dialog, message, "Choose", JOptionPane.YES_NO_OPTION);
+
+         if (choice == 1) {
+            option = false;
+         } else {
+            option = true;
+         }
+      }
+
+      return option;
+   }
+
+   public static float inputFloat(float limit) {
       float value;
 
       do {
-         System.out.print("        ");
-
          try {
-            value = input.nextFloat();
+            value = Float.parseFloat((JOptionPane.showInputDialog(dialog, "\n\tOption: ")));
          } catch (InputMismatchException e) {
             System.out.println("\tPlease enter a valid number.");
-            value = input.nextFloat();
+            value = Integer.parseInt((JOptionPane.showInputDialog(dialog, "\n\tOption: ")));
             continue;
          }
 
          while (value > limit || value < 0) {
-            value = input.nextFloat();
+            value = Float.parseFloat((JOptionPane.showInputDialog(dialog, "\n\tOption: ")));
             System.out.println("\tEnter the exact number of input.");
          }
          return value;
@@ -147,34 +143,35 @@ public class Helpers {
       } while (true);
    }
 
+   public static String getString(String message) {
+      String word = "";
+
+      if (message.equals("")) {
+         message = "Input";
+      } else {
+         do {
+            try {
+               word = JOptionPane.showInputDialog(dialog, message);
+
+               if (word.equals("")) {
+                  word = JOptionPane.showInputDialog(dialog, message);
+               } else {
+                  break;
+               }
+            } catch (InputMismatchException e) {
+               System.out.println("Mismatch");
+               word = JOptionPane.showInputDialog(dialog, message);
+            }
+         } while (true);
+      }
+      return word;
+   }
+
    public static void clear() {
       try {
          new ProcessBuilder("cmd", "/c", "cls", "clear").inheritIO().start().waitFor();
       } catch (Exception e) {
          e.printStackTrace();
-      }
-   }
-
-   public static String hidePassword() {
-      char[] password = console.readPassword("        Hidden: ");
-      String str = new String(password);
-      return str;
-   }
-
-   public static void prompt() {
-
-      System.out.println("\tDo another transaction? press y or n");
-      char choice = input.next().charAt(0);
-
-      while (choice != 'y' || choice != 'n') {
-
-         if (choice == 'y') {
-            break;
-         }
-         if (choice == 'n') {
-            System.out.println("\tThank you and have a good day.\n");
-            System.exit(0);
-         }
       }
    }
 }
