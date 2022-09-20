@@ -2,7 +2,6 @@ import java.io.IOException;
 import java.util.Scanner;
 import Machine.Helpers;
 import Machine.Tools;
-import javax.swing.*;
 
 public class Atm {
 
